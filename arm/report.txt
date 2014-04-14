@@ -1,26 +1,23 @@
-Name: Danjie Lu       UFID:3231-1202
-This is my first project during my graduate study in UF, and exactly first computer program project in my life, which is a memorable experience for me. 
-Method:
-Using the relationship between table ¡®Trans¡¯, ¡®items¡¯  by operating the ¡®GROUP BY¡¯, ¡® HAVING ¡¯ can provide an easy and efficient way to get the solutions of task1 to task3. The code of SQL to pick size-n items with support s is following:
-SELECT i1.ItemName, i2.ItemName, ¡­.,in.ItemName
-FROM Trans t1, Items i1, Trans t2, Items i2,¡­., Trans tn, Items in
-WHERE t1.ItemID=i1.ItemID AND t2.ItemID=i2.ItemID AND¡­.AND tn.ItemID=in.ItemID AND t1.TransID=t2.TransID AND ¡­.AND tn-1.TransID=tn.TransID AND t1.ItemID<t2.ItemID AND ¡­.AND tn-1.ItemID<tn.ItemID
-GROUP BY i1.ItemName, i2.ItemName,¡­, in.ItemName
+Using the relationship between table ï¿½ï¿½Transï¿½ï¿½, ï¿½ï¿½itemsï¿½ï¿½  by operating the ï¿½ï¿½GROUP BYï¿½ï¿½, ï¿½ï¿½ HAVING ï¿½ï¿½ can provide an easy and efficient way to get the solutions of task1 to task3. The code of SQL to pick size-n items with support s is following:
+SELECT i1.ItemName, i2.ItemName, ï¿½ï¿½.,in.ItemName
+FROM Trans t1, Items i1, Trans t2, Items i2,ï¿½ï¿½., Trans tn, Items in
+WHERE t1.ItemID=i1.ItemID AND t2.ItemID=i2.ItemID ANDï¿½ï¿½.AND tn.ItemID=in.ItemID AND t1.TransID=t2.TransID AND ï¿½ï¿½.AND tn-1.TransID=tn.TransID AND t1.ItemID<t2.ItemID AND ï¿½ï¿½.AND tn-1.ItemID<tn.ItemID
+GROUP BY i1.ItemName, i2.ItemName,ï¿½ï¿½, in.ItemName
 HAVING COUNT(*)>=support*1731;
-We can get the code like ¡°i1.ItemName, i2.ItemName, ¡­.,in.ItemName¡± by using loop in JAVA. After picking out size-n items, we can easily obtain the items whose size is less than n by using loop.
+We can get the code like ï¿½ï¿½i1.ItemName, i2.ItemName, ï¿½ï¿½.,in.ItemNameï¿½ï¿½ by using loop in JAVA. After picking out size-n items, we can easily obtain the items whose size is less than n by using loop.
 
 For task 4, the main idea is following:
-1.Create a table called tempsizen(id1 integer, id2 integer,¡­,idn integer), which the ¡°id(i)¡± in this table stand for the size-n items whose supports are all larger than user-defined support level;
-2.Create a table called main(id integer, id1 integer, id2 integer,¡­,idn integer, co integer), which the ¡°id1, id2..idn¡± is the same as ¡°tempsizen¡±, and the first list ¡°id¡± is the a key for table main, which can identify unique row, and the ¡°co¡± is the count which size-n items appears in transaction. 
-We  can use command ¡°GROUP BY¡± and ¡°HAVING¡± to give the ¡°co¡± for table main, and using command ¡°TRIGGER¡± with a sequence ¡°seq_main¡±(start with 1) to get the ¡°id¡± in main;
-3.Create a table called tpsizen(id integer, itemid integer), and the ¡°itemid¡± can be obtained from the ¡°¡±id1,id2..idn¡± of table main, and ¡°id¡± can be inserted with the help of command ¡±Trigger¡±(each time start with 1). Start to insert with (id, id1) to (id, idn), we can get a table including the size-n itemid( the same group of items has the same id) with use-defined support level.
-4.Create a table called sizen(id integer, itemid integer), which has the same content with tpsizen, and the only difference is the ¡°id¡± of sizen is ordered by ASC.
-5.Create tables called subt+(line)(id1 integer, id2 integer¡­,idn integer), the line is the id of table main. And this table contains all possible unduplicated combination, such as for ABC items, the combinations should be A,B,C,AB,AC,BC.
-6.Create tables called sub+(line+x)(id1 integer,..idx integer,  co integer),  the line is the id of table main, ¡°x¡± and the x stand for all the possible combinations mentioned in step5. And this table contains for each line of items the items and the count it appears in table trans.
-7.Create tables called tempfinal(line+x)( id1 integer, id2 integer¡­,idn integer, co integer). ¡°line¡± and ¡°x¡± is same as step 6. This table contains each items and their count number appear in table trans.
-8.Create tables called final(line+x)(id integer, id1 integer, id2 integer¡­,idn integer, co integer). This table has the same contents with tempfinal(line+x), and the only difference is the id, which gets from the command ¡°TRIGGER¡±.
-9.Finally get the results from table ¡°final¡±, which we get print out the results by loops.
+1.Create a table called tempsizen(id1 integer, id2 integer,ï¿½ï¿½,idn integer), which the ï¿½ï¿½id(i)ï¿½ï¿½ in this table stand for the size-n items whose supports are all larger than user-defined support level;
+2.Create a table called main(id integer, id1 integer, id2 integer,ï¿½ï¿½,idn integer, co integer), which the ï¿½ï¿½id1, id2..idnï¿½ï¿½ is the same as ï¿½ï¿½tempsizenï¿½ï¿½, and the first list ï¿½ï¿½idï¿½ï¿½ is the a key for table main, which can identify unique row, and the ï¿½ï¿½coï¿½ï¿½ is the count which size-n items appears in transaction. 
+We  can use command ï¿½ï¿½GROUP BYï¿½ï¿½ and ï¿½ï¿½HAVINGï¿½ï¿½ to give the ï¿½ï¿½coï¿½ï¿½ for table main, and using command ï¿½ï¿½TRIGGERï¿½ï¿½ with a sequence ï¿½ï¿½seq_mainï¿½ï¿½(start with 1) to get the ï¿½ï¿½idï¿½ï¿½ in main;
+3.Create a table called tpsizen(id integer, itemid integer), and the ï¿½ï¿½itemidï¿½ï¿½ can be obtained from the ï¿½ï¿½ï¿½ï¿½id1,id2..idnï¿½ï¿½ of table main, and ï¿½ï¿½idï¿½ï¿½ can be inserted with the help of command ï¿½ï¿½Triggerï¿½ï¿½(each time start with 1). Start to insert with (id, id1) to (id, idn), we can get a table including the size-n itemid( the same group of items has the same id) with use-defined support level.
+4.Create a table called sizen(id integer, itemid integer), which has the same content with tpsizen, and the only difference is the ï¿½ï¿½idï¿½ï¿½ of sizen is ordered by ASC.
+5.Create tables called subt+(line)(id1 integer, id2 integerï¿½ï¿½,idn integer), the line is the id of table main. And this table contains all possible unduplicated combination, such as for ABC items, the combinations should be A,B,C,AB,AC,BC.
+6.Create tables called sub+(line+x)(id1 integer,..idx integer,  co integer),  the line is the id of table main, ï¿½ï¿½xï¿½ï¿½ and the x stand for all the possible combinations mentioned in step5. And this table contains for each line of items the items and the count it appears in table trans.
+7.Create tables called tempfinal(line+x)( id1 integer, id2 integerï¿½ï¿½,idn integer, co integer). ï¿½ï¿½lineï¿½ï¿½ and ï¿½ï¿½xï¿½ï¿½ is same as step 6. This table contains each items and their count number appear in table trans.
+8.Create tables called final(line+x)(id integer, id1 integer, id2 integerï¿½ï¿½,idn integer, co integer). This table has the same contents with tempfinal(line+x), and the only difference is the id, which gets from the command ï¿½ï¿½TRIGGERï¿½ï¿½.
+9.Finally get the results from table ï¿½ï¿½finalï¿½ï¿½, which we get print out the results by loops.
 
 In ORACLE, what the problem I face gives me great impression is the idea to get table "final(line+x)" of task4. I spend much time to get the idea to get the results, while finally I get the idea of task4 to get the table "final(line+x)" on the bus to school. Once I get off the bus, I quickly write my idea onto my notebook.
 
-As a non-CISE student, who has no any experience with Java programming, I face a great numbers of problems during programming, from connecting with Database to print out the results.  However, thanks to the suggestions from Google, Baidu, TAs, arm.pdf and my friends£¬ etc. Finally I finished my first project!
+As a non-CISE student, who has no any experience with Java programming, I face a great numbers of problems during programming, from connecting with Database to print out the results.  However, thanks to the suggestions from Google, Baidu, TAs, arm.pdf and my friendsï¿½ï¿½ etc. Finally I finished my first project!
